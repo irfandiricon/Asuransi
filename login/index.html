@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" >
+    <head>
+        <meta charset="UTF-8">
+        <title>Login To System</title>
+        <link rel="icon" type="image/jpg" href="../images/login.png" sizes="32x32" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+        <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900|RobotoDraft:400,100,300,500,700,900'>
+        <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body>
+        <div class="module form-module" style="margin-top:30px;">
+            <div class="toggle"><i class="fa fa-times fa-pencil"></i>
+                <div class="tooltip">Click Me</div>
+            </div>
+            <div class="form">
+                <h2>Login to System</h2>
+                <form name="form_login" id="form_login" method="POST">
+                    <input required type="text" placeholder="Username" id="username" name="username"/>
+                    <input required type="password" placeholder="Password" id="password" name="password"/>
+                    <select name="koneksi" id="koneksi">
+                        <option value="local">LOCALHOST</option>
+                        <option value="kmi">KMI ONLINE</option>
+                        <option value="kmj">KMJ ONLINE</option>
+                    </select>
+                    <button onclick="proses_login()" type="button">Login</button>
+                </form>
+                <hr width="100%">
+                <div id="pesan" align="center" style="color:red"></div>
+            </div>
+            <div class="form">
+                <h2>Create an account</h2>
+                <form>
+                    <input type="text" placeholder="Username"/>
+                    <input type="password" placeholder="Password"/>
+                    <input type="email" placeholder="Email Address"/>
+                    <input type="tel" placeholder="Phone Number"/>
+                    <button>Register</button>
+                </form>
+            </div>
+            <div class="cta"><a href="#">Forgot your password?</a></div>
+        </div>
+        <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+        <script  src="js/index.js"></script>
+    </body>
+</html>
+
+<script>
+    function proses_login(){
+        var data = $('#form_login').serialize();
+        var koneksi = document.getElementById('koneksi').value;
+        $.ajax({
+            url : '../__proses_login.php',
+            type : 'post',
+            cahce : false,
+            data : data,
+            dataType : 'json',
+            success : function(result){
+                var isValid = result.isValid;
+                var pesan = result.query;
+                var username = result.rows['user'];
+                var nama = result.rows['nama'];
+                var kode_area = result.rows['kode_area'];
+                var kode_kantor = result.rows['kd_cabang'];
+                var divisi_id = result.rows['divisi_id'];
+                var jabatan = result.rows['jabatan'];
+                var nik = result.rows['nik'];
+                var group_menu = result.rows['group_menu'];
+                var user_id = result.rows['user_id'];
+                var user_id_induk = result.rows['user_id_induk'];
+
+                if(isValid==1){
+                    localStorage.clear();
+                    localStorage.setItem('KONEKSI',koneksi);
+                    localStorage.setItem('USERNAME',username);
+                    localStorage.setItem('KODE_AREA',kode_area);
+                    localStorage.setItem('KODE_KANTOR',kode_kantor);
+                    localStorage.setItem('DIVISI_ID',divisi_id);
+                    localStorage.setItem('JABATAN',jabatan);
+                    localStorage.setItem('NIK',nik);
+                    localStorage.setItem('GROUP_MENU',group_menu);
+                    localStorage.setItem('USER_ID',user_id);
+                    localStorage.setItem('NAMA',nama);
+                    localStorage.setItem('USER_ID_INDUK',user_id_induk);
+                    window.location.href='../';
+                }else{
+                    localStorage.clear();
+                    $('#pesan').html('<span class="panel panel-danger">'+pesan+'</span>');
+                    return;
+                }
+            }
+        });
+    }
+</script>

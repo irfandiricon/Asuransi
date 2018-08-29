@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab');
+
+.nav-md{
+    font-family: 'Roboto Slab', serif;
+}
+
+.nav_menu{
+    margin-left: 20px;
+    padding-right: 50px;
+}
+.left_col{
+    left: 5px;
+
+}
+.panel-body{
+    background-color: #000;
+}
+
+footer {
+    margin-left: 0px;
+}
+
+.nav-sm footer {
+    margin-left: 90px;
+}
+
+.btn {
+    font-size: 12px;
+}
+
+.sidebar-footer.hidden-small{
+    padding-top: 15px;
+    width: 250px;
+}
