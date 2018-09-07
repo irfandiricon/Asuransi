@@ -38,28 +38,50 @@ if(in_array($username, array($pic_asuransi)) || in_array($group_menu,array("IT")
     $paramater_kantor = "and a.kode_kantor = '$kode_kantor'";
 }
 
+$lampiran_spa = "file_spa";
+$lampiran_ktp = "file_ktp";
+$link_spa = "'http://103.234.254.186/asuransi/file_upload/spa/'";
+$link_ktp = "'http://103.234.254.186/asuransi/file_upload/ktp/'";
+$file = "CONCAT('<a href=',".$link_spa.",".$lampiran_spa.",' target=__blank>',' &nbsp;<b>(SPA)</b>','</a>','  || ',
+        '<a href=',".$link_ktp.",".$lampiran_ktp.",' target=__blank>',' &nbsp;<b>(KTP)</b>','</a>') as lampiran,";
+
 $query[] = "SELECT COUNT(*) as total
     FROM dpm_online.kredit AS a
-    INNER JOIN webtool.asr_cover_jaminan AS b ON a.no_rekening = b.no_rekening
-    INNER JOIN dpm_online.jaminan_dokument AS c ON c.agunan_id = b.agunan_id
+    INNER JOIN webtool.asr_cover_jiwa AS b ON a.no_rekening = b.no_rekening
+    INNER JOIN dpm_online.jaminan_dokument AS c ON
+    	(a.agunan_id1 = c.agunan_id OR a.agunan_id2 = c.agunan_id OR a.agunan_id3 = c.agunan_id
+    	OR a.agunan_id4 = c.agunan_id OR a.agunan_id5 = c.agunan_id)
     INNER JOIN dpm_online.nasabah AS d ON a.nasabah_id = d.nasabah_id
-    INNER JOIN dpm_online.kre_kode_asuransi AS e ON b.kode_asuransi = e.kode_asuransi
-    LEFT JOIN webtool.asr_polis AS f ON b.no_rekening = f.no_rekening AND b.agunan_id = f.agunan_id AND f.jenis_asuransi='1'
+    INNER JOIN dpm_online.kre_kode_asuransi AS e ON e.kode_asuransi = b.kode_asuransi
+    INNER JOIN dpm_online.app_kode_kantor AS f ON f.kode_kantor = b.kode_group_cabang
+    INNER JOIN dpm_online.css_kode_dati AS g ON g.kode_dati = d.kota_kab
+    INNER JOIN dpm_online.nasabah_alamat AS h ON h.nasabah_id = d.nasabah_id
+    INNER JOIN dpm_online.css_kode_propvinsi AS i ON h.ktp_propinsi = i.kode_provinsi
+    LEFT JOIN webtool.asr_polis AS f ON b.no_rekening = f.no_rekening AND f.jenis_asuransi='2'
     WHERE b.created_date like '%$tanggal_cover%' $paramater_kantor
     AND (b.no_rekening like '$keyword%' or d.nama_nasabah like '%$keyword%')";
 
-$query[] = "SELECT f.id, f.id_polis, b.no_rekening, a.tgl_realisasi, a.tgl_jatuh_tempo, c.agunan_id, d.nama_nasabah, d.alamat, d.tgllahir, c.jenis,
-    a.jml_angsuran, a.jml_pinjaman, a.nilai_taksasi_agunan, a.kode_asuransi, UPPER(e.deskripsi_asuransi) AS deskripsi_asuransi, b.rate, b.nilai_pertanggungan,
-    b.premi, b.titipan_asuransi, b.total_titipan, b.komisi, b.net_premi, b.created_date, b.created_by, c.kd_jenis, c.kd_merk, c.kd_type,
-    c.no_rangka, c.no_mesin, c.warna, c.tahun, c.no_polisi, c.alamat_bpkb, c.alamat_sertifikat, c.kelurahan_sertifikat, c.kecamatan_sertifikat,
-    c.kota_sertifikat, c.propinsi_sertifikat, c.kode_pos_sertifikat, b.okupasi, b.kode_pertanggungan, b.selisih, f.id_polis,
-    IF(f.status_endorsement=1,'Ya', IF(f.status_endorsement=0,'Tidak',NULL)) AS status_endorsement, d.tempatlahir, d.telpon
+$query[] = "SELECT $file
+    f.id, f.id_polis, a.kode_kantor, d.no_id, b.no_ktp, d.nama_nasabah, f.nama_area_kerja, d.tempatlahir, d.tgllahir, d.alamat, h.ktp_alamat, h.ktp_rt,
+    h.ktp_rw, h.ktp_desa, h.ktp_kecamatan, g.deskripsi_kode_dati  AS kota_kab, i.nama_provinsi AS ktp_propinsi, h.ktp_kodepos AS ktp_kodepos,
+    b.jenis_kelamin, b.tinggi_badan, b.berat_badan, d.hp AS no_telp, d.telpon, a.type_kredit, a.tgl_realisasi, a.tgl_jatuh_tempo,
+    a.tgl_jt_asuransi_jiwa AS tgl_jt_asuransi_jiwa, a.jml_angsuran, a.jml_pinjaman, a.nilai_taksasi_agunan, c.jenis, c.kd_jenis, a.nilai_asuransi_jiwa,
+    c.alamat_bpkb, c.alamat_sertifikat, UPPER(e.deskripsi_asuransi) as deskripsi_asuransi, b.no_rekening, b.kode_asuransi, b.kode_group_cabang, b.nama_tertanggung,
+    b.rateAsuransi AS rate, b.ratePremiGross AS premiGross, b.ratePremiCigna AS premiCigna, b.extraPremi, b.totalPremi, b.totalLoan,
+    b.titipan_asuransi, b.biayaAdmin, b.keteranganJaminan, b.companyCode,  b.programCigna, b.created_date, b.created_by, b.file_spa, b.file_ktp,
+    IF(f.status_endorsement=1,'Ya', IF(f.status_endorsement=0,'Tidak',NULL)) AS status_endorsement, '0' AS agunan_id
     FROM dpm_online.kredit AS a
-    INNER JOIN webtool.asr_cover_jaminan AS b ON a.no_rekening = b.no_rekening
-    INNER JOIN dpm_online.jaminan_dokument AS c ON c.agunan_id = b.agunan_id
+    INNER JOIN webtool.asr_cover_jiwa AS b ON a.no_rekening = b.no_rekening
+    INNER JOIN dpm_online.jaminan_dokument AS c ON
+    	(a.agunan_id1 = c.agunan_id OR a.agunan_id2 = c.agunan_id OR a.agunan_id3 = c.agunan_id
+    	OR a.agunan_id4 = c.agunan_id OR a.agunan_id5 = c.agunan_id)
     INNER JOIN dpm_online.nasabah AS d ON a.nasabah_id = d.nasabah_id
-    INNER JOIN dpm_online.kre_kode_asuransi AS e ON b.kode_asuransi = e.kode_asuransi
-    LEFT JOIN webtool.asr_polis AS f ON b.no_rekening = f.no_rekening AND b.agunan_id = f.agunan_id AND f.jenis_asuransi='1'
+    INNER JOIN dpm_online.kre_kode_asuransi AS e ON e.kode_asuransi = b.kode_asuransi
+    INNER JOIN dpm_online.app_kode_kantor AS f ON f.kode_kantor = b.kode_group_cabang
+    INNER JOIN dpm_online.css_kode_dati AS g ON g.kode_dati = d.kota_kab
+    INNER JOIN dpm_online.nasabah_alamat AS h ON h.nasabah_id = d.nasabah_id
+    INNER JOIN dpm_online.css_kode_propvinsi AS i ON h.ktp_propinsi = i.kode_provinsi
+    LEFT JOIN webtool.asr_polis AS f ON b.no_rekening = f.no_rekening AND f.jenis_asuransi='2'
     WHERE b.created_date like '%$tanggal_cover%' $paramater_kantor
     AND (b.no_rekening like '$keyword%' or d.nama_nasabah like '%$keyword%')
     ORDER BY $sort $order $limit";

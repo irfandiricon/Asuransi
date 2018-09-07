@@ -39,18 +39,19 @@ $(function(){
             {field:'nama_nasabah',title:'<span style="font-weight:bold">NAMA NASABAH</span>',width : 250,sortable:true},
             {field:'status_endorsement',title:'<span style="font-weight:bold">ENDORSEMENT</span>',width : 150,sortable:true},
             {field:'deskripsi_asuransi',title:'<span style="font-weight:bold">NAMA ASURANSI</span>',width : 150,sortable:true},
+            {field:'lampiran',title:'<span style="font-weight:bold">FILE</span>',width : 150,sortable:true},
         ]],
         striped : true,
         pagination:true,
         pageSize:20,
         onDblClickRow : function(){
-            ProsesPolisJaminan();
+            ProsesPolisJiwa();
         },
         toolbar : [{
             text:'Proses Data',
             iconCls:'icon-save',
             handler:function(){
-                ProsesPolisJaminan();
+                ProsesPolisJiwa();
             }
         }],
         onLoadSuccess : function(data){
@@ -108,7 +109,7 @@ function doSearch(){
     $('#dg_nasabah_jiwa').datagrid('load', data);
 }
 
-function ProsesPolisJaminan(){
+function ProsesPolisJiwa(){
     var hTbl = parseInt($(window).innerHeight())-40;
     var rowSelected = $('#dg_nasabah_jiwa').datagrid('getSelected') || {};
     var no_rekening = rowSelected.no_rekening;
@@ -150,7 +151,7 @@ function ProsesPolisJaminan(){
             iconCls:'icon-save',
             id : 'prosesSimpanJaminan',
             handler:function(){
-                ProsesSimpanPolisJaminan();
+                ProsesSimpanPolisJiwa();
             }
         },{
             text:'Batal',
@@ -162,11 +163,11 @@ function ProsesPolisJaminan(){
     });
 }
 
-function ProsesSimpanPolisJaminan(){
+function ProsesSimpanPolisJiwa(){
     var id = $('#id').val();
     var id_polis = $('#id_polis').numberbox('getValue');
     var no_rekening = $('#no_rekening').textbox('getValue');
-    var agunan_id = $('#agunan_id').val();
+    var agunan_id = $('#agunan_id').val() || 0;
     var tanggal_awal_polis = $('#tgl_realisasi').datebox('getValue');
     var tanggal_akhir_polis = $('#tgl_jatuh_tempo').datebox('getValue');
     var status = $('#status_endorsement').is(":checked");
@@ -187,14 +188,14 @@ function ProsesSimpanPolisJaminan(){
         id_polis : id_polis,
         no_rekening : no_rekening,
         agunan_id : agunan_id,
-        jenis_asuransi : '1',
+        jenis_asuransi : '2',
         tanggal_awal_polis : tanggal_awal_polis,
         tanggal_akhir_polis : tanggal_akhir_polis,
         status_endorsement : status_endorsement,
         created_by : created_by
     }
     $.ajax({
-        url : 'content/__proses/simpan_polis_jaminan.php',
+        url : 'content/__proses/simpan_polis_jiwa.php',
         data : data,
         cahce : false,
         type : 'post',
