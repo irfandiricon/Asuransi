@@ -25,7 +25,7 @@ define('PASSWORD_KMJ','Km1SuppIT!');
 
 define('NAMA_PERUSAHAAN','PT. BPR Kredit Mandiri Indonesia');
 define('ALAMAT_PERUSAHAAN','Jl. Raya Karang Satria No.3, Rt.003, Rw.002, Kel. Karang Satria, Kec. Tambun Utara, Bekasi. Telp. 021-82652929, Email : info@kreditmandiri.co.id.');
-define('PIC_ASURANSI',"'riri','nini_hernita'");
+define('PIC_ASURANSI',"'nini_hernita'");
 
 define('KENDARAAN_MOTOR',"'MT','SM','SPD M'");
 

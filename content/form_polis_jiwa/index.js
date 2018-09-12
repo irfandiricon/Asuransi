@@ -26,7 +26,7 @@ $(function(){
             jabatan : jabatan,
             divisi_id : divisi_id,
             group_menu : group_menu,
-            usernname : username,
+            username : username,
             user_id : user_id,
             kode_area : kode_area
         },
@@ -100,7 +100,7 @@ function doSearch(){
         jabatan : jabatan,
         divisi_id : divisi_id,
         group_menu : group_menu,
-        usernname : username,
+        username : username,
         user_id : user_id,
         kode_area : kode_area,
         tgl_cover : tgl_cover,

@@ -7,7 +7,7 @@ $table_jaminan_dokument = TABLE_JAMINAN_DOKUMENT;
 $table_kre_kode_asuransi = TABLE_KRE_KODE_ASURANSI;
 $table_nasabah = TABLE_NASABAH;
 $table_kredit = TABLE_KREDIT;
-$pic_asuransi = PIC_ASURANSI;
+$pic_asuransi = 'nini_hernita';
 $table_cover_jaminan = TABLE_COVER_JAMINAN;
 $table_polis = TABLE_POLIS;
 
@@ -51,9 +51,11 @@ $query[] = "SELECT COUNT(*) as total
 $query[] = "SELECT f.id, f.id_polis, b.no_rekening, a.tgl_realisasi, a.tgl_jatuh_tempo, c.agunan_id, d.nama_nasabah, d.alamat, d.tgllahir, c.jenis,
     a.jml_angsuran, a.jml_pinjaman, a.nilai_taksasi_agunan, a.kode_asuransi, UPPER(e.deskripsi_asuransi) AS deskripsi_asuransi, b.rate, b.nilai_pertanggungan,
     b.premi, b.titipan_asuransi, b.total_titipan, b.komisi, b.net_premi, b.created_date, b.created_by, c.kd_jenis, c.kd_merk, c.kd_type,
-    c.no_rangka, c.no_mesin, c.warna, c.tahun, c.no_polisi, c.alamat_bpkb, c.alamat_sertifikat, c.kelurahan_sertifikat, c.kecamatan_sertifikat,
+    c.no_rangka, c.no_mesin, c.warna, c.tahun, c.no_polisi, c.nama_bpkb, c.alamat_bpkb, c.nama_pemilik_sertifikat, c.alamat_sertifikat, c.kelurahan_sertifikat, c.kecamatan_sertifikat,
     c.kota_sertifikat, c.propinsi_sertifikat, c.kode_pos_sertifikat, b.okupasi, b.kode_pertanggungan, b.selisih, f.id_polis,
-    IF(f.status_endorsement=1,'Ya', IF(f.status_endorsement=0,'Tidak',NULL)) AS status_endorsement, d.tempatlahir, d.telpon
+    IF(f.status_endorsement=1,'Ya', IF(f.status_endorsement=0,'Tidak',NULL)) AS status_endorsement, d.tempatlahir, d.telpon,
+    IF(c.jenis='BPKB',c.nama_bpkb, c.nama_pemilik_sertifikat) as nama_jaminan,
+    IF(c.jenis='BPKB',c.alamat_bpkb, c.alamat_sertifikat) as alamat_jaminan
     FROM dpm_online.kredit AS a
     INNER JOIN webtool.asr_cover_jaminan AS b ON a.no_rekening = b.no_rekening
     INNER JOIN dpm_online.jaminan_dokument AS c ON c.agunan_id = b.agunan_id

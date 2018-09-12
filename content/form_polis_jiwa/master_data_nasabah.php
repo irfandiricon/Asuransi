@@ -7,7 +7,7 @@ $table_jaminan_dokument = TABLE_JAMINAN_DOKUMENT;
 $table_kre_kode_asuransi = TABLE_KRE_KODE_ASURANSI;
 $table_nasabah = TABLE_NASABAH;
 $table_kredit = TABLE_KREDIT;
-$pic_asuransi = PIC_ASURANSI;
+$pic_asuransi = 'nini_hernita';
 $table_cover_jaminan = TABLE_COVER_JAMINAN;
 $table_polis = TABLE_POLIS;
 
@@ -40,8 +40,8 @@ if(in_array($username, array($pic_asuransi)) || in_array($group_menu,array("IT")
 
 $lampiran_spa = "file_spa";
 $lampiran_ktp = "file_ktp";
-$link_spa = "'http://103.234.254.186/asuransi/file_upload/spa/'";
-$link_ktp = "'http://103.234.254.186/asuransi/file_upload/ktp/'";
+$link_spa = "'http://103.234.254.186/asuransi_new/file_upload/spa/'";
+$link_ktp = "'http://103.234.254.186/asuransi_new/file_upload/ktp/'";
 $file = "CONCAT('<a href=',".$link_spa.",".$lampiran_spa.",' target=__blank>',' &nbsp;<b>(SPA)</b>','</a>','  || ',
         '<a href=',".$link_ktp.",".$lampiran_ktp.",' target=__blank>',' &nbsp;<b>(KTP)</b>','</a>') as lampiran,";
 

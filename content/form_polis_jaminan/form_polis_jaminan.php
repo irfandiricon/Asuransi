@@ -53,6 +53,22 @@
                             <input readonly class="easyui-textbox" id="alamat" name="alamat" data-options="multiline:true, height:80">
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <b>Nama Jaminan</b>
+                        </div>
+                        <div class="col-lg-7">
+                            <input readonly class="easyui-textbox" id="nama_jaminan" name="nama_jaminan">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <b>Alamat Jaminan</b>
+                        </div>
+                        <div class="col-lg-7">
+                            <input readonly class="easyui-textbox" id="alamat_jaminan" name="alamat_jaminan" data-options="multiline:true, height:80">
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-md-6">
@@ -89,6 +105,22 @@
                         </div>
                         <div class="col-lg-7">
                             <input readonly class="easyui-textbox" id="jml_angsuran" name="jml_angsuran">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <b>Rate</b>
+                        </div>
+                        <div class="col-lg-7">
+                            <input readonly class="easyui-textbox" id="rate" name="rate">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <b>Premi</b>
+                        </div>
+                        <div class="col-lg-7">
+                            <input readonly class="easyui-numberbox" id="titipan_asuransi" name="titipan_asuransi" data-options="precision:2,groupSeparator:','">
                         </div>
                     </div>
                     <div class="row">
