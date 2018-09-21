@@ -86,7 +86,7 @@ $query = "SELECT b.created_date, b.no_rekening, a.tgl_realisasi, d.nama_nasabah,
     INNER JOIN $DB.$table_okupasi AS f ON b.okupasi = f.id
     WHERE b.kode_asuransi = '$kode_asuransi' AND b.jenis_jaminan='$jenis'
     AND DATE(b.created_date) BETWEEN'$periode_awal' AND '$periode_akhir'
-    ORDER BY a.tgl_realisasi asc";
+    ORDER BY b.no_rekening asc";
 
 $ex_query=mysqli_query($KONEKSI,$query);
 while($d= mysqli_fetch_assoc($ex_query)){
@@ -105,6 +105,7 @@ while($d= mysqli_fetch_assoc($ex_query)){
     $propinsi_sertifikat=$d['propinsi_sertifikat'];
     $kode_pos_sertifikat=$d['kode_pos_sertifikat'];
 
+    $tahun_angsuran = ceil($lama_cover/12);
     if (empty($kode_pos_sertifikat)){
         $kode_pos_sertifikat="";
     }else{
@@ -120,7 +121,7 @@ while($d= mysqli_fetch_assoc($ex_query)){
     $objPHPExcel->getActiveSheet()->setCellValue('D'.$n, $rate);
     $objPHPExcel->getActiveSheet()->setCellValue('E'.$n, $no_rekening);
     $objPHPExcel->getActiveSheet()->setCellValue('F'.$n, $nama_nasabah);
-    $objPHPExcel->getActiveSheet()->setCellValue('G'.$n, $lama_cover);
+    $objPHPExcel->getActiveSheet()->setCellValue('G'.$n, $tahun_angsuran);
     $objPHPExcel->getActiveSheet()->setCellValue('H'.$n, number_format($nilai_pertanggungan,2));
     $objPHPExcel->getActiveSheet()->setCellValue('I'.$n, $alamat_jaminan);
 

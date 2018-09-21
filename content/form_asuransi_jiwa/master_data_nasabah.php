@@ -32,7 +32,7 @@ $error=array();
 $query=array();
 $result=array('total' =>0 ,'rows' => array());
 
-if(in_array($username, array($pic_asuransi)) || in_array($group_menu,array("IT"))){
+if(in_array($username, array("nini_hernita")) || in_array($group_menu,array("IT"))){
     $paramater_kantor = "";
 }else{
     $paramater_kantor = "and a.kode_kantor = '$kode_kantor'";

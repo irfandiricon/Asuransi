@@ -103,7 +103,7 @@ $query = "SELECT a.kode_kantor, b.no_rekening, a.tgl_realisasi, a.tgl_jatuh_temp
     WHERE b.kode_asuransi = '$kode_asuransi' AND b.jenis_jaminan='$jenis'
     AND DATE(b.created_date) BETWEEN'$periode_awal' AND '$periode_akhir'
     AND c.kd_jenis IN ($tipe_kendaraan_motor)
-    ORDER BY a.tgl_realisasi asc ";
+    ORDER BY b.no_rekening asc ";
 
 $ex_query=mysqli_query($KONEKSI,$query);
 //
@@ -123,12 +123,13 @@ while($d= mysqli_fetch_assoc($ex_query)){
     $no_polisi=$d['no_polisi'];
     $no_rangka=$d['no_rangka'];
     $no_mesin=$d['no_mesin'];
+    $tahun_angsuran = ceil($lama_cover/12);
 
     $objPHPExcel->getActiveSheet()->setCellValue('A'.$n, $no++);
     $objPHPExcel->getActiveSheet()->setCellValue('B'.$n, $tgl_realisasi);
     $objPHPExcel->getActiveSheet()->setCellValue('C'.$n, $no_rekening);
     $objPHPExcel->getActiveSheet()->setCellValue('D'.$n, $nama_nasabah);
-    $objPHPExcel->getActiveSheet()->setCellValue('E'.$n, $lama_cover);
+    $objPHPExcel->getActiveSheet()->setCellValue('E'.$n, $tahun_angsuran);
     $objPHPExcel->getActiveSheet()->setCellValue('F'.$n, number_format($nilai_pertanggungan,2));
     $objPHPExcel->getActiveSheet()->setCellValue('G'.$n, $kd_merk." / ".$kd_type);
     $objPHPExcel->getActiveSheet()->setCellValue('H'.$n, $tahun);

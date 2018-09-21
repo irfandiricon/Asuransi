@@ -113,7 +113,7 @@ $query = "SELECT DISTINCT
     a.jml_angsuran, a.jml_pinjaman, a.nilai_taksasi_agunan,  a.nilai_asuransi_jiwa, b.no_rekening, b.nama_tertanggung,
     b.titipan_asuransi
     FROM $dpm_online.$table_kredit AS a
-    INNER JOIN webtool.asr_cover_jiwa AS b ON a.no_rekening = b.no_rekening
+    INNER JOIN $DB.$table_cover_jiwa AS b ON a.no_rekening = b.no_rekening
     INNER JOIN $dpm_online.$table_jaminan_document AS c ON
     	(a.agunan_id1 = c.agunan_id OR a.agunan_id2 = c.agunan_id OR a.agunan_id3 = c.agunan_id
     	OR a.agunan_id4 = c.agunan_id OR a.agunan_id5 = c.agunan_id)
@@ -124,7 +124,7 @@ $query = "SELECT DISTINCT
     INNER JOIN $dpm_online.$table_nasabah_alamat AS h ON h.nasabah_id = d.nasabah_id
     INNER JOIN $dpm_online.$table_css_kode_propvinsi AS i ON h.ktp_propinsi = i.kode_provinsi
     WHERE b.kode_asuransi = '007' and b.created_date like '%$periode_awal%'
-    ORDER BY DATE(a.tgl_realisasi)";
+    ORDER BY DATE(b.no_rekening)";
 
 $ex_query=mysqli_query($KONEKSI,$query);
 while($d= mysqli_fetch_assoc($ex_query)){

@@ -93,6 +93,14 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-5">
+                            <b>Pertanggungan</b>
+                        </div>
+                        <div class="col-lg-7">
+                            <input readonly class="easyui-numberbox" id="nilai_asuransi" name="nilai_asuransi" data-options="precision:2,groupSeparator:','">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-5">
                             <b>Plafon</b>
                         </div>
                         <div class="col-lg-7">
