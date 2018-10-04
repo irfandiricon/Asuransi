@@ -124,7 +124,7 @@ $query = "SELECT DISTINCT
     INNER JOIN $dpm_online.$table_nasabah_alamat AS h ON h.nasabah_id = d.nasabah_id
     INNER JOIN $dpm_online.$table_css_kode_propvinsi AS i ON h.ktp_propinsi = i.kode_provinsi
     WHERE b.kode_asuransi = '007' and b.created_date like '%$periode_awal%'
-    ORDER BY DATE(b.no_rekening)";
+    ORDER BY DATE(a.tgl_realisasi)";
 
 $ex_query=mysqli_query($KONEKSI,$query);
 while($d= mysqli_fetch_assoc($ex_query)){
